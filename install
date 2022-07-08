@@ -19,32 +19,21 @@ function usage ()
 
 # step 1, installing enviroment
 DEF_VIM_PATH='env/vim_u2004'
-DEF_VIM_VER='vim9.0'
+DEF_VIM='vim9.0'
 DEF_VIM_RUNTIME='vim90'
-DEF_VIM_FILE=$DEF_VIM_VER.tar.gz
 
 if [ -z $1 ]; then
-	VIM_PATH=$DEF_VIM_PATH/$DEF_VIM_FILE
-	VIM_EXTRAT=$DEF_VIM_VER
+	VIM_PATH=$DEF_VIM_PATH/$DEF_VIM
 elif [ ''$1 == '1404' ]; then
-	VIM_PATH=env/vim_u1404/$DEF_VIM_FILE
-	VIM_EXTRAT=$DEF_VIM_VER
+	VIM_PATH=env/vim_u1404/$DEF_VIM
 elif [ ''$1 == '2004' ]; then
-	VIM_PATH=env/vim_u2004/$DEF_VIM_FILE
-	VIM_EXTRAT=$DEF_VIM_VER
+	VIM_PATH=env/vim_u2004/$DEF_VIM
 else
 	usage
 	exit
 fi
 
-# step 2, uncompress the vim
-tar -zxpf $VIM_PATH 2> /dev/null
-if [ $? -ne 0 ]; then
-	echo "uncompress failed"
-	exit
-fi
-
-# step 3, backup original files/directories
+# step 2, backup original files/directories
 if [ -z $HOME ]; then
 	echo "Cannot access the HOME directory"
 	exit
@@ -75,27 +64,27 @@ if [ -d $HOME/chormvim ]; then
 	fi
 fi
 
-# step 4, move my working enviroment
-mv $VIM_EXTRAT/share/tagbar $HOME/.vim/
+# step 3, move my working enviroment
+mv $VIM_PATH/share/tagbar $HOME/.vim/
 if [ $? -ne 0 ]; then
 	echo "install the .vim failed"
 	exit
 fi
 
-cp $VIM_EXTRAT/share/vim/vim90/vimrc_example.vim $HOME/.vimrc
+cp $VIM_PATH/share/vim/vim90/vimrc_example.vim $HOME/.vimrc
 if [ $? -ne 0 ]; then
 	echo "install the '.vimrc' failed"
 	exit
 fi
 
-mv $VIM_EXTRAT $HOME/chormvim/
+mv $VIM_PATH $HOME/chormvim/
 if [ $? -ne 0 ]; then
 	echo "install the 'vim' failed"
 	exit
 fi
 
 
-# step 5, install finished
+# step 4, install finished
 echo ""
 echo "Install finished"
 echo ""
