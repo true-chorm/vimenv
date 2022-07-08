@@ -12,14 +12,14 @@
 安装：
 
 1.  ./install
-2.  . setenv
+2.  source setenv
 
 
 
 卸载：
 
 1. ./uninstall
-2. . unsetenv
+2. source unsetenv
 
 
 
