@@ -25,7 +25,7 @@
 
 #### 使用说明
 
-默认的安装方式为一次性生效，若需永久生效，须自行在.bashrc或.profile中添加PATH和VIMRUNTIME环境变量。
+安装/卸载后必须执行setenv/unsetenv来配置运行环境，且此种配置为一次性生效。若需永久生效，须自行在.bashrc或.profile中添加PATH和VIMRUNTIME环境变量。
 
 #### 
 
