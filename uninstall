@@ -1,0 +1,20 @@
+#!/bin/bash
+
+if [ -z $HOME ]; then
+	echo "No HOME found"
+	exit
+fi
+
+rm -rf $HOME/.vim
+if [ -d $HOME/.vim.chorm.bak ]; then
+	mv $HOME/.vim.chorm.bak/ $HOME/.vim/
+fi
+
+rm $HOME/.vimrc
+if [ -f $HOME/.vimrc.chorm.bak ]; then
+	mv $HOME/.vimrc.chorm.bak $HOME/.vimrc
+fi
+
+rm -rf $HOME/chormvim/
+
+echo "Uninstall finished"

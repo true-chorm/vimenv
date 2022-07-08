@@ -1,0 +1,6 @@
+#!/bin/bash
+
+PATHTMP=`echo ${PATH#*:}`
+export PATH=$PATHTMP
+export VIMRUNTIME=''
+

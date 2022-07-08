@@ -1,0 +1,101 @@
+#!/bin/bash
+
+function usage ()
+{
+	echo "Usage: install [env]"
+	echo " 1, ./install"
+	echo "   You can install with no parameter, that means the default setting will"
+	echo "   be apply, that is, vim9.0 builts in ubuntu 20.04."
+	echo ""
+	echo " 2, ./install 1404"
+	echo "   You can specify one parameter, that is, the vim building enviroment"
+	echo "   1404 means that vim which build in ubuntu 14.04 with version 9.0 will"
+	echo "   be install"
+	echo "   The supported env is list below:"
+	echo "     ubuntu 14.04"
+	echo "     ubuntu 20.04"
+	echo ""
+}
+
+# step 1, installing enviroment
+DEF_VIM_PATH='env/vim_u2004'
+DEF_VIM_VER='vim9.0'
+DEF_VIM_RUNTIME='vim90'
+DEF_VIM_FILE=$DEF_VIM_VER.tar.gz
+
+if [ -z $1 ]; then
+	VIM_PATH=$DEF_VIM_PATH/$DEF_VIM_FILE
+	VIM_EXTRAT=$DEF_VIM_VER
+elif [ ''$1 == '1404' ]; then
+	VIM_PATH=env/vim_u1404/$DEF_VIM_FILE
+	VIM_EXTRAT=$DEF_VIM_VER
+elif [ ''$1 == '2004' ]; then
+	VIM_PATH=env/vim_u2004/$DEF_VIM_FILE
+	VIM_EXTRAT=$DEF_VIM_VER
+else
+	usage
+	exit
+fi
+
+# step 2, uncompress the vim
+tar -zxpf $VIM_PATH 2> /dev/null
+if [ $? -ne 0 ]; then
+	echo "uncompress failed"
+	exit
+fi
+
+# step 3, backup original files/directories
+if [ -z $HOME ]; then
+	echo "Cannot access the HOME directory"
+	exit
+fi
+
+if [ -d $HOME/.vim ]; then
+	mv $HOME/.vim $HOME/.vim.chorm.bak/
+	if [ $? -ne 0 ]; then
+		echo "backup .vim filed"
+		exit
+	fi
+fi
+
+if [ -f $HOME/.vimrc ]; then
+	mv $HOME/.vimrc $HOME/.vimrc.chorm.bak
+	if [ $? -ne 0 ]; then
+		echo "backup .vimrc filed"
+		exit
+	fi
+fi
+
+if [ -d $HOME/chormvim ]; then
+	echo "removing the 'chormvim' that already exists"
+	rm -rf $HOME/chormvim
+	if [ $? -ne 0 ]; then
+		echo "delete 'chormvim' failed"
+		exit
+	fi
+fi
+
+# step 4, move my working enviroment
+mv $VIM_EXTRAT/share/tagbar $HOME/.vim/
+if [ $? -ne 0 ]; then
+	echo "install the .vim failed"
+	exit
+fi
+
+cp $VIM_EXTRAT/share/vim/vim90/vimrc_example.vim $HOME/.vimrc
+if [ $? -ne 0 ]; then
+	echo "install the '.vimrc' failed"
+	exit
+fi
+
+mv $VIM_EXTRAT $HOME/chormvim/
+if [ $? -ne 0 ]; then
+	echo "install the 'vim' failed"
+	exit
+fi
+
+
+# step 5, install finished
+echo ""
+echo "Install finished"
+echo ""

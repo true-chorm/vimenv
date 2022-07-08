@@ -1,0 +1,5 @@
+#!/bin/bash
+
+export PATH="$HOME/chormvim/bin:$PATH"
+export VIMRUNTIME="$HOME/chormvim/share/vim/vim90"
+
