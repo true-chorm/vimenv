@@ -68,4 +68,5 @@ noremap <C-]> <C-]>zz
 noremap <C-t> <C-t>zz
 let g:tagbar_width = 60
 set scroll=32
-
+set tabstop=4
+set shiftwidth=4
